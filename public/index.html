@@ -115,19 +115,30 @@
       });
     }
 
-    function showQuestion(index) {
-      currentQuestionIndex = index;
-      const q = questions[index];
-      document.getElementById('questionText').textContent = `Q${index + 1}: ${q.question}`;
-      const opts = document.getElementById('optionsContainer');
-      opts.innerHTML = '';
-      q.options.forEach((opt, i) => {
-        const label = document.createElement('label');
-        label.innerHTML = `<input type="radio" name="opt" value="${opt}"> ${opt}`;
-        opts.appendChild(label);
-      });
-      document.getElementById('questionBox').style.display = 'block';
-    }
+function showQuestion(index) {
+  currentQuestionIndex = index;
+  const q = questions[index];
+  document.getElementById('questionText').textContent = `Q${index + 1}: ${q.question}`;
+
+  const opts = document.getElementById('optionsContainer');
+  opts.innerHTML = '';
+
+  q.options.forEach((opt, i) => {
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="radio" name="opt" value="${opt}"> ${opt}`;
+    opts.appendChild(label);
+  });
+
+  // 👇 Add this if you want to show the correct answer explicitly
+  const answerEl = document.createElement('p');
+  answerEl.style.marginTop = '15px';
+  answerEl.style.fontWeight = 'bold';
+  answerEl.textContent = `✅ Correct Answer: ${q.answer}`;
+  opts.appendChild(answerEl);
+
+  document.getElementById('questionBox').style.display = 'block';
+}
+
 
     function markAnswered() {
       if (!answered.includes(currentQuestionIndex)) {
