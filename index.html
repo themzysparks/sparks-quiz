@@ -2,155 +2,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quiz Admin Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Quiz Panel</title>
   <style>
-    :root {
-      --primary: #4f46e5;
-      --bg: #f9f9f9;
-      --text: #222;
-      --accent: #10b981;
-    }
-
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: var(--primary);
-    }
-
-    #question-nav {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f2f2;
+      color: #333;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
       gap: 10px;
-      justify-content: center;
+      width: 100%;
+      max-width: 600px;
       margin-bottom: 20px;
     }
-
-    .question-number {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background-color: white;
-      border: 2px solid var(--primary);
-      color: var(--primary);
-      text-align: center;
-      line-height: 35px;
-      font-weight: bold;
+    .grid button {
+      padding: 10px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background 0.3s, transform 0.2s;
     }
-
-    .question-number:hover {
-      background-color: var(--primary);
-      color: white;
+    .grid button.answered {
+      background: #aaa;
+      cursor: default;
     }
-
-    .answered {
-      background-color: var(--accent);
-      color: white;
-      border-color: var(--accent);
+    .grid button:hover:not(.answered) {
+      transform: scale(1.05);
     }
-
     .question-box {
       background: white;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      margin-bottom: 20px;
     }
-
-    .option {
-      margin-top: 10px;
-      padding: 10px;
-      background-color: #f0f0f0;
-      border-radius: 6px;
+    .question-box h2 {
+      margin: 0 0 10px;
     }
-
-    button {
-      margin-top: 20px;
-      background: var(--accent);
+    .options label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    .reset-btn {
+      background: #e53935;
       color: white;
       border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
+      padding: 10px 20px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s ease;
     }
-
-    button:hover {
-      background: #0e9b72;
+    .reset-btn:hover {
+      background: #c62828;
     }
   </style>
 </head>
 <body>
+  <h1>Admin Quiz Panel</h1>
+  <div class="grid" id="questionGrid"></div>
+  <div class="question-box" id="questionBox" style="display:none">
+    <h2 id="questionText"></h2>
+    <div class="options" id="optionsContainer"></div>
+    <button onclick="markAnswered()">Mark as Answered</button>
+  </div>
+  <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
 
-<h2>Admin Quiz Panel</h2>
+  <script>
+    let questions = [];
+    let currentQuestionIndex = null;
+    let answered = JSON.parse(localStorage.getItem('answeredQuestions')) || [];
 
-<div id="question-nav"></div>
-
-<div class="question-box">
-  <h3 id="question-text">Click a number to view a question</h3>
-  <div id="options-container"></div>
-  <button id="mark-answered" style="display:none;">Mark as Answered</button>
-</div>
-
-<script>
-  let questions = [];
-  let currentIndex = -1;
-
-  fetch('questions.json')
-    .then(res => res.json())
-    .then(data => {
-      questions = data;
-      renderNav();
-    });
-
-  function renderNav() {
-    const nav = document.getElementById("question-nav");
-    nav.innerHTML = "";
-    questions.forEach((_, i) => {
-      const btn = document.createElement("div");
-      btn.className = "question-number";
-      btn.textContent = i + 1;
-      btn.onclick = () => loadQuestion(i);
-      btn.id = `qbtn-${i}`;
-      nav.appendChild(btn);
-    });
-  }
-
-  function loadQuestion(index) {
-    currentIndex = index;
-    const question = questions[index];
-    document.getElementById("question-text").textContent = question.question;
-
-    const optionsDiv = document.getElementById("options-container");
-    optionsDiv.innerHTML = "";
-    question.options.forEach(opt => {
-      const div = document.createElement("div");
-      div.className = "option";
-      div.textContent = opt;
-      optionsDiv.appendChild(div);
-    });
-
-    document.getElementById("mark-answered").style.display = "inline-block";
-  }
-
-  document.getElementById("mark-answered").onclick = () => {
-    if (currentIndex >= 0) {
-      document.getElementById(`qbtn-${currentIndex}`).classList.add("answered");
+    async function loadQuestions() {
+      // Simulating a JSON file fetch
+      const res = await fetch('questions.json');
+      questions = await res.json();
+      renderGrid();
     }
-  };
-</script>
 
+    function renderGrid() {
+      const grid = document.getElementById('questionGrid');
+      grid.innerHTML = '';
+      questions.forEach((q, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = index + 1;
+        if (answered.includes(index)) btn.classList.add('answered');
+        btn.onclick = () => showQuestion(index);
+        grid.appendChild(btn);
+      });
+    }
+
+    function showQuestion(index) {
+      currentQuestionIndex = index;
+      const q = questions[index];
+      document.getElementById('questionText').textContent = `Q${index + 1}: ${q.question}`;
+      const opts = document.getElementById('optionsContainer');
+      opts.innerHTML = '';
+      q.options.forEach((opt, i) => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="radio" name="opt" value="${opt}"> ${opt}`;
+        opts.appendChild(label);
+      });
+      document.getElementById('questionBox').style.display = 'block';
+    }
+
+    function markAnswered() {
+      if (!answered.includes(currentQuestionIndex)) {
+        answered.push(currentQuestionIndex);
+        localStorage.setItem('answeredQuestions', JSON.stringify(answered));
+        renderGrid();
+        alert(`Marked question ${currentQuestionIndex + 1} as answered.`);
+      }
+    }
+
+    function resetQuiz() {
+      if (confirm("Are you sure you want to reset all progress?")) {
+        localStorage.removeItem('answeredQuestions');
+        answered = [];
+        renderGrid();
+        document.getElementById('questionBox').style.display = 'none';
+      }
+    }
+
+    loadQuestions();
+  </script>
 </body>
 </html>
