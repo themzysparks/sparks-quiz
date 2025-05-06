@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --bg: #f9f9f9;
+      --text: #222;
+      --accent: #10b981;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    #question-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .question-number {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: white;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      text-align: center;
+      line-height: 35px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .question-number:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .answered {
+      background-color: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .question-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .option {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 20px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0e9b72;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Admin Quiz Panel</h2>
+
+<div id="question-nav"></div>
+
+<div class="question-box">
+  <h3 id="question-text">Click a number to view a question</h3>
+  <div id="options-container"></div>
+  <button id="mark-answered" style="display:none;">Mark as Answered</button>
+</div>
+
+<script>
+  let questions = [];
+  let currentIndex = -1;
+
+  fetch('questions.json')
+    .then(res => res.json())
+    .then(data => {
+      questions = data;
+      renderNav();
+    });
+
+  function renderNav() {
+    const nav = document.getElementById("question-nav");
+    nav.innerHTML = "";
+    questions.forEach((_, i) => {
+      const btn = document.createElement("div");
+      btn.className = "question-number";
+      btn.textContent = i + 1;
+      btn.onclick = () => loadQuestion(i);
+      btn.id = `qbtn-${i}`;
+      nav.appendChild(btn);
+    });
+  }
+
+  function loadQuestion(index) {
+    currentIndex = index;
+    const question = questions[index];
+    document.getElementById("question-text").textContent = question.question;
+
+    const optionsDiv = document.getElementById("options-container");
+    optionsDiv.innerHTML = "";
+    question.options.forEach(opt => {
+      const div = document.createElement("div");
+      div.className = "option";
+      div.textContent = opt;
+      optionsDiv.appendChild(div);
+    });
+
+    document.getElementById("mark-answered").style.display = "inline-block";
+  }
+
+  document.getElementById("mark-answered").onclick = () => {
+    if (currentIndex >= 0) {
+      document.getElementById(`qbtn-${currentIndex}`).classList.add("answered");
+    }
+  };
+</script>
+
+</body>
+</html>
