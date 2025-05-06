@@ -88,7 +88,7 @@
 
     async function loadQuestions() {
       // Simulating a JSON file fetch
-      const res = await fetch('questions.json');
+      const res = await fetch('/questions.json');
       questions = await res.json();
       renderGrid();
     }
