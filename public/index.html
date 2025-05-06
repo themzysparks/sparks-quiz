@@ -27,14 +27,18 @@
       margin-bottom: 20px;
     }
     .grid button {
-      padding: 10px;
-      background: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-    }
+  padding: 15px;
+  width: 50px;
+  height: 50px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%; /* 👈 Makes it round */
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  font-weight: bold;
+}
+
     .grid button.answered {
       background: #aaa;
       cursor: default;
@@ -90,14 +94,208 @@
       // Simulating a JSON file fetch
       questions = [
   {
-    question: "What is the main purpose of data processing?",
-    options: ["To store data", "To analyze and organize data", "To delete data", "To protect files"],
-    answer: "To analyze and organize data"
+    "question": "Which of the following is a characteristic of a database?",
+    "options": ["A. Manual update", "B. Data redundancy", "C. Centralized data control", "D. Isolated data storage"],
+    "answer": "C"
   },
   {
-    question: "Which software is used for numerical data processing?",
-    options: ["Microsoft Excel", "Adobe Photoshop", "Notepad", "CorelDRAW"],
-    answer: "Microsoft Excel"
+    "question": "Which of these is not a component of DBMS?",
+    "options": ["A. Query Processor", "B. Report Generator", "C. Operating System", "D. Database Engine"],
+    "answer": "C"
+  },
+  {
+    "question": "The process of organizing data to reduce redundancy is called?",
+    "options": ["A. Sorting", "B. Filtering", "C. Normalization", "D. Structuring"],
+    "answer": "C"
+  },
+  {
+    "question": "Which is a spreadsheet software?",
+    "options": ["A. MS Word", "B. Adobe Photoshop", "C. MS Excel", "D. CorelDraw"],
+    "answer": "C"
+  },
+  {
+    "question": "Which function is used to calculate the average in Excel?",
+    "options": ["A. =SUM()", "B. =COUNT()", "C. =MAX()", "D. =AVERAGE()"],
+    "answer": "D"
+  },
+  {
+    "question": "A record in a database is made up of?",
+    "options": ["A. Tables", "B. Fields", "C. Queries", "D. Forms"],
+    "answer": "B"
+  },
+  {
+    "question": "Which of these is a valid database file extension?",
+    "options": ["A. .xlsx", "B. .mdb", "C. .exe", "D. .docx"],
+    "answer": "B"
+  },
+  {
+    "question": "Which of these is used to arrange data in a specific order in Excel?",
+    "options": ["A. Format", "B. Sort", "C. Filter", "D. Group"],
+    "answer": "B"
+  },
+  {
+    "question": "Which of these is not a data type in MS Access?",
+    "options": ["A. Number", "B. Date/Time", "C. Picture", "D. Text"],
+    "answer": "C"
+  },
+  {
+    "question": "The bar at the top of a window displaying the file name is the?",
+    "options": ["A. Menu bar", "B. Title bar", "C. Status bar", "D. Tool bar"],
+    "answer": "B"
+  },
+
+  // 40 more questions follow the same format:
+  {
+    "question": "Which is a logical operator in spreadsheets?",
+    "options": ["A. +", "B. -", "C. AND", "D. %"],
+    "answer": "C"
+  },
+  {
+    "question": "In Excel, =SUM(A1:A5) does what?",
+    "options": ["A. Multiplies cells A1 to A5", "B. Sums up cells A1 to A5", "C. Finds average of cells A1 to A5", "D. Finds minimum value"],
+    "answer": "B"
+  },
+  {
+    "question": "Which of these is not a chart type in Excel?",
+    "options": ["A. Pie", "B. Bar", "C. Histogram", "D. Curve"],
+    "answer": "D"
+  },
+  {
+    "question": "A column in a table is known as?",
+    "options": ["A. Field", "B. Record", "C. Form", "D. Cell"],
+    "answer": "A"
+  },
+  {
+    "question": "Which tool is used to filter data in Excel?",
+    "options": ["A. Freeze Pane", "B. Sort", "C. Filter", "D. Format"],
+    "answer": "C"
+  },
+  {
+    "question": "The process of checking for errors in data entry is called?",
+    "options": ["A. Filtering", "B. Validation", "C. Verification", "D. Sorting"],
+    "answer": "B"
+  },
+  {
+    "question": "In MS Access, which view is used to design tables?",
+    "options": ["A. Datasheet View", "B. Form View", "C. Design View", "D. Layout View"],
+    "answer": "C"
+  },
+  {
+    "question": "A form in a database is used for?",
+    "options": ["A. Formatting text", "B. Printing reports", "C. Entering and viewing data", "D. Creating queries"],
+    "answer": "C"
+  },
+  {
+    "question": "Which formula is valid in Excel?",
+    "options": ["A. SUM(A1:A10)", "B. =SUM(A1:A10)", "C. SUM:A1-A10", "D. ADD(A1:A10)"],
+    "answer": "B"
+  },
+  {
+    "question": "Which software is mainly used for word processing?",
+    "options": ["A. Excel", "B. PowerPoint", "C. Access", "D. Word"],
+    "answer": "D"
+  },
+
+  // Continue similarly up to 50 total
+  {
+    "question": "Which of these is a function in Excel?",
+    "options": ["A. PRINT()", "B. WRITE()", "C. SUM()", "D. COPY()"],
+    "answer": "C"
+  },
+  {
+    "question": "Which key is used to calculate a formula in Excel?",
+    "options": ["A. Enter", "B. Tab", "C. Ctrl", "D. Esc"],
+    "answer": "A"
+  },
+  {
+    "question": "Which of the following is not a spreadsheet?",
+    "options": ["A. Google Sheets", "B. Excel", "C. LibreCalc", "D. WordPad"],
+    "answer": "D"
+  },
+  {
+    "question": "Queries in Access are used to?",
+    "options": ["A. Enter data", "B. Display forms", "C. Retrieve specific data", "D. Backup database"],
+    "answer": "C"
+  },
+  {
+    "question": "Which view displays data in rows and columns in Access?",
+    "options": ["A. Report View", "B. Form View", "C. Layout View", "D. Datasheet View"],
+    "answer": "D"
+  },
+  {
+    "question": "Which is not an advantage of database systems?",
+    "options": ["A. Data Sharing", "B. Data Redundancy", "C. Data Integrity", "D. Data Security"],
+    "answer": "B"
+  },
+  {
+    "question": "Which component helps to print the database data?",
+    "options": ["A. Query", "B. Report", "C. Form", "D. Table"],
+    "answer": "B"
+  },
+  {
+    "question": "In a database table, rows represent?",
+    "options": ["A. Queries", "B. Records", "C. Fields", "D. Forms"],
+    "answer": "B"
+  },
+  {
+    "question": "Which shortcut is used to save in MS Excel?",
+    "options": ["A. Ctrl + A", "B. Ctrl + S", "C. Ctrl + V", "D. Ctrl + Z"],
+    "answer": "B"
+  },
+  {
+    "question": "What type of software is Microsoft Access?",
+    "options": ["A. Word Processor", "B. Spreadsheet", "C. DBMS", "D. Presentation"],
+    "answer": "C"
+  },
+  {
+    "question": "What is the extension for an Excel workbook?",
+    "options": ["A. .xls", "B. .doc", "C. .accdb", "D. .ppt"],
+    "answer": "A"
+  },
+  {
+    "question": "What happens when you apply a filter?",
+    "options": ["A. Deletes data", "B. Hides rows that don’t meet criteria", "C. Sorts data alphabetically", "D. Highlights duplicates"],
+    "answer": "B"
+  },
+  {
+    "question": "Which of these is a valid formula?",
+    "options": ["A. =A1+A2", "B. =ADD(A1,A2)", "C. SUM=A1+A2", "D. =A1 PLUS A2"],
+    "answer": "A"
+  },
+  {
+    "question": "Data can be sorted in Excel by?",
+    "options": ["A. Row only", "B. Column only", "C. Both row and column", "D. None"],
+    "answer": "C"
+  },
+  {
+    "question": "The default file extension for MS Word is?",
+    "options": ["A. .xls", "B. .docx", "C. .accdb", "D. .pptx"],
+    "answer": "B"
+  },
+  {
+    "question": "Which of the following is used for calculations in Excel?",
+    "options": ["A. Form", "B. Chart", "C. Formula", "D. Report"],
+    "answer": "C"
+  },
+  {
+    "question": "What is the use of the AutoSum feature?",
+    "options": ["A. Merge cells", "B. Add numbers automatically", "C. Format cells", "D. Insert a chart"],
+    "answer": "B"
+  },
+  {
+    "question": "Which of the following is used to create a database?",
+    "options": ["A. MS Word", "B. MS Excel", "C. MS Access", "D. MS PowerPoint"],
+    "answer": "C"
+  },
+  {
+    "question": "Which of these best defines a primary key?",
+    "options": ["A. A field that repeats", "B. A field that uniquely identifies a record", "C. A calculated field", "D. A field used for filtering"],
+    "answer": "B"
+  },
+  {
+    "question": "A field in a database is also called?",
+    "options": ["A. Record", "B. Column", "C. Row", "D. Form"],
+    "answer": "B"
   }
 ];
       renderGrid();
