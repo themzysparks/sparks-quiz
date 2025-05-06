@@ -88,8 +88,18 @@
 
     async function loadQuestions() {
       // Simulating a JSON file fetch
-      const res = await fetch('/questions.json');
-      questions = await res.json();
+      questions = [
+  {
+    question: "What is the main purpose of data processing?",
+    options: ["To store data", "To analyze and organize data", "To delete data", "To protect files"],
+    answer: "To analyze and organize data"
+  },
+  {
+    question: "Which software is used for numerical data processing?",
+    options: ["Microsoft Excel", "Adobe Photoshop", "Notepad", "CorelDRAW"],
+    answer: "Microsoft Excel"
+  }
+];
       renderGrid();
     }
 
